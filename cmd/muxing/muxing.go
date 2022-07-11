@@ -24,7 +24,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 // Start /** Starts the web server listener on given host and port.
 func Start(host string, port int) {
 	router := mux.NewRouter()
-	router.HandleFunc("/bad/", handler).Methods("POST")
+	router.HandleFunc("/bad/", handler).Methods("GET")
 	router.HandleFunc("/", handler).Methods("POST")
 	router.HandleFunc("/", handler).Methods("POST")
 	router.HandleFunc("/", handler).Methods("POST")
