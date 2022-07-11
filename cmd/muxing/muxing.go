@@ -17,14 +17,14 @@ Feel free to drop gorilla.mux if you want and use any other solution available.
 main function reads host/port from env just for an example, flavor it following your taste
 */
 func handler(w http.ResponseWriter, r *http.Request) {
-
-	w.Write([]byte("Status: 500"))
+	w.WriteHeader(500)
+	//w.Write([]byte("Status: 500"))
 
 	return
 }
 func handlerTwo(w http.ResponseWriter, r *http.Request) {
-	n := r.FormValue("PARAM")
-	w.Write([]byte("Hello, " + n + "!"))
+	name := mux.Vars(r)["PARAM"]
+	w.Write([]byte("Hello, " + name + "!"))
 
 	return
 }
@@ -33,7 +33,7 @@ func handlerTwo(w http.ResponseWriter, r *http.Request) {
 func Start(host string, port int) {
 	router := mux.NewRouter()
 	router.HandleFunc("/bad", handler).Methods("GET")
-	router.HandleFunc("/name/", handlerTwo).Methods("GET")
+	router.HandleFunc("/name/{PARAM}", handlerTwo).Methods("GET")
 	router.HandleFunc("/", handler).Methods("POST")
 	router.HandleFunc("/", handler).Methods("POST")
 	log.Println(fmt.Printf("Starting API server on %s:%d\n", host, port))
