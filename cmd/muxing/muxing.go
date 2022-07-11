@@ -27,12 +27,20 @@ func handlerTwo(w http.ResponseWriter, r *http.Request) {
 
 	return
 }
+func handlerEmpty(w http.ResponseWriter, r *http.Request) {
+
+	w.WriteHeader(200)
+	w.Write([]byte(""))
+
+	return
+}
 
 // Start /** Starts the web server listener on given host and port.
 func Start(host string, port int) {
 	router := mux.NewRouter()
 	router.HandleFunc("/bad", handler).Methods("GET")
 	router.HandleFunc("/name/{PARAM}", handlerTwo).Methods("GET")
+	router.HandleFunc("/", handlerEmpty).Methods("GET")
 	router.HandleFunc("/", handler).Methods("POST")
 	router.HandleFunc("/", handler).Methods("POST")
 	log.Println(fmt.Printf("Starting API server on %s:%d\n", host, port))
