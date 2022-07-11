@@ -23,7 +23,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func handlerTwo(w http.ResponseWriter, r *http.Request) {
 	name := mux.Vars(r)["PARAM"]
 	w.WriteHeader(200)
-	w.Write([]byte("body: Hello, " + name + "!"))
+	w.Write([]byte("Hello, " + name + "!"))
 
 	return
 }
