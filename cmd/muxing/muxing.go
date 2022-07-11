@@ -40,7 +40,7 @@ func Start(host string, port int) {
 	router := mux.NewRouter()
 	router.HandleFunc("/bad", handler).Methods("GET")
 	router.HandleFunc("/name/{PARAM}", handlerTwo).Methods("GET")
-	router.HandleFunc("/", handlerEmpty).Methods("GET")
+	router.HandleFunc("/", handlerEmpty).Methods("POST")
 	router.HandleFunc("/", handler).Methods("POST")
 	router.HandleFunc("/", handler).Methods("POST")
 	log.Println(fmt.Printf("Starting API server on %s:%d\n", host, port))
