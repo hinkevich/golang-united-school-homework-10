@@ -17,7 +17,7 @@ Feel free to drop gorilla.mux if you want and use any other solution available.
 main function reads host/port from env just for an example, flavor it following your taste
 */
 func handler(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(500)
+	w.WriteHeader(http.StatusInternalServerError)
 	//w.Write([]byte("Status: 500"))
 
 	return
