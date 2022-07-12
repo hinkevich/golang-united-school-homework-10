@@ -55,10 +55,13 @@ func handlerHeadersPost(w http.ResponseWriter, r *http.Request) {
 	}
 	sum := strconv.Itoa(a + b)
 	w.WriteHeader(200)
-	responseHeader := w.Header()
-	responseHeader.Set("a+b: ", sum)
+	//responseHeader := w.Header()
+	//responseHeader.Set("a+b: ", sum)
+	//w.WriteHeader(200)
+	w.Header().Set("a+b: ", sum)
 	w.WriteHeader(200)
 	w.Write([]byte("\"a+b: " + sum + "\""))
+	//w.Header().Set("a+b: ", sum)
 }
 
 // Start /** Starts the web server listener on given host and port.
