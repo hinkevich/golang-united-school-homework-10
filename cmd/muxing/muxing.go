@@ -49,7 +49,7 @@ func handlerHeadersPost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	b, err := strconv.Atoi(header.Get("a"))
+	b, err := strconv.Atoi(header.Get("b"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -58,7 +58,7 @@ func handlerHeadersPost(w http.ResponseWriter, r *http.Request) {
 	//var responseHeader http.Header
 	//responseHeader.Set("a+b",sum)
 	w.Header().Set("a+b", sum)
-	w.Write([]byte("its ok"))
+	w.Write([]byte("\"a+b: " + sum + "\""))
 }
 
 // Start /** Starts the web server listener on given host and port.
