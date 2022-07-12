@@ -58,7 +58,7 @@ func handlerHeadersPost(w http.ResponseWriter, r *http.Request) {
 	//responseHeader := w.Header()
 	//responseHeader.Set("a+b: ", sum)
 	//w.WriteHeader(200)
-	w.Header().Add("a+b: ", sum)
+	w.Header().Add("a+b", sum)
 	w.WriteHeader(200)
 	w.Write([]byte("\"a+b: " + sum + "\""))
 	//w.Header().Set("a+b: ", sum)
