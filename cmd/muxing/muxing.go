@@ -16,11 +16,12 @@ Feel free to drop gorilla.mux if you want and use any other solution available.
 
 main function reads host/port from env just for an example, flavor it following your taste
 */
-func handler(w http.ResponseWriter, r *http.Request) {
-
+func handlerBad(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(500)
+	w.Write([]byte("500"))
 	return
 }
-func handlerTwo(w http.ResponseWriter, r *http.Request) {
+func handlerName(w http.ResponseWriter, r *http.Request) {
 	name := mux.Vars(r)["PARAM"]
 	w.WriteHeader(200)
 	w.Write([]byte("Hello, " + name + "!"))
@@ -38,11 +39,11 @@ func handlerEmpty(w http.ResponseWriter, r *http.Request) {
 // Start /** Starts the web server listener on given host and port.
 func Start(host string, port int) {
 	router := mux.NewRouter()
-	router.HandleFunc("/bad", handler).Methods("GET")
-	router.HandleFunc("/name/{PARAM}", handlerTwo).Methods("GET")
+	router.HandleFunc("/bad", handlerBad).Methods("GET")
+	router.HandleFunc("/name/{PARAM}", handlerName).Methods("GET")
 	router.HandleFunc("/", handlerEmpty).Methods("POST")
-	router.HandleFunc("/", handler).Methods("POST")
-	router.HandleFunc("/", handler).Methods("POST")
+	router.HandleFunc("/", handlerBad).Methods("POST")
+	router.HandleFunc("/", handlerBad).Methods("POST")
 	log.Println(fmt.Printf("Starting API server on %s:%d\n", host, port))
 	if err := http.ListenAndServe(fmt.Sprintf("%s:%d", host, port), router); err != nil {
 		log.Fatal(err)
