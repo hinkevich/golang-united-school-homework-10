@@ -54,11 +54,11 @@ func handlerHeadersPost(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	sum := strconv.Itoa(a + b)
-	w.WriteHeader(200)
+	//w.WriteHeader(200)
 	//responseHeader := w.Header()
 	//responseHeader.Set("a+b: ", sum)
 	//w.WriteHeader(200)
-	w.Header().Set("a+b: ", sum)
+	w.Header().Add("a+b: ", sum)
 	w.WriteHeader(200)
 	w.Write([]byte("\"a+b: " + sum + "\""))
 	//w.Header().Set("a+b: ", sum)
