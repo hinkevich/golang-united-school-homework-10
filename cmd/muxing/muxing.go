@@ -35,6 +35,20 @@ func handlerEmpty(w http.ResponseWriter, r *http.Request) {
 
 	return
 }
+func handlerDataPost(w http.ResponseWriter, r *http.Request) {
+	data := mux.Vars(r)["PARAM"]
+
+	w.WriteHeader(200)
+	//date := r.FormValue("PARAM")
+	//date, err := r.GetBody()
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+
+	w.Write([]byte("I got message:\n" + data))
+
+	return
+}
 
 // Start /** Starts the web server listener on given host and port.
 func Start(host string, port int) {
@@ -42,7 +56,7 @@ func Start(host string, port int) {
 	router.HandleFunc("/bad", handlerBad).Methods("GET")
 	router.HandleFunc("/name/{PARAM}", handlerName).Methods("GET")
 	router.HandleFunc("/", handlerEmpty).Methods("POST")
-	router.HandleFunc("/", handlerBad).Methods("POST")
+	router.HandleFunc("/data/{PARAM}", handlerDataPost).Methods("POST")
 	router.HandleFunc("/", handlerBad).Methods("POST")
 	log.Println(fmt.Printf("Starting API server on %s:%d\n", host, port))
 	if err := http.ListenAndServe(fmt.Sprintf("%s:%d", host, port), router); err != nil {
