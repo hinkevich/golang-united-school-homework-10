@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -36,7 +37,10 @@ func handlerEmpty(w http.ResponseWriter, r *http.Request) {
 	return
 }
 func handlerDataPost(w http.ResponseWriter, r *http.Request) {
-	data := mux.Vars(r)["PARAM"]
+	data, err := io.ReadAll(r.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	w.WriteHeader(200)
 	//date := r.FormValue("PARAM")
@@ -44,8 +48,9 @@ func handlerDataPost(w http.ResponseWriter, r *http.Request) {
 	//if err != nil {
 	//	log.Fatal(err)
 	//}
-
-	w.Write([]byte("I got message:\n" + data))
+	//msg := []byte("I got message:\n")
+	w.Write([]byte("I got message:\n"))
+	w.Write(data)
 
 	return
 }
@@ -56,7 +61,7 @@ func Start(host string, port int) {
 	router.HandleFunc("/bad", handlerBad).Methods("GET")
 	router.HandleFunc("/name/{PARAM}", handlerName).Methods("GET")
 	router.HandleFunc("/", handlerEmpty).Methods("POST")
-	router.HandleFunc("/data/{PARAM}", handlerDataPost).Methods("POST")
+	router.HandleFunc("/data", handlerDataPost).Methods("POST")
 	router.HandleFunc("/", handlerBad).Methods("POST")
 	log.Println(fmt.Printf("Starting API server on %s:%d\n", host, port))
 	if err := http.ListenAndServe(fmt.Sprintf("%s:%d", host, port), router); err != nil {
